@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>DomEtherWallet Frontend</title>
+
+	
+
+
+  
+   
+    <style>
+          body {
+               background-color: blue;
+               font-size:35px;
+               text-align: center;
+              }
+           button {
+               background-color: violet;
+               font-size: 45px;
+               }
+           button:hover {
+              background-color: yellow;
+               }
+    </style>
+  
+  </head>
+  <body>
+    <h1>DomEtherWallet Frontend</h1>
+  <div>
+    <p1>The Domiciliaary Etherem Wallet Vs--8</p1>
+
+  </div>
+
+  <div>
+    <p2>concerned about safety of your crypto assets,<br> enter the <it>Domiciliay Ethereum Wallet</it></p2>
+  </div>
+
+  <button onclick="provider.send('eth_requestAccounts', []).then(() => {
+    provider.listAccounts().then((accounts) => {
+      signer = provider.getSigner(accounts[0]);
+      document.getElementById('wallet-address').innerHTML = accounts[0];
+    });
+  });">Get Wallet Address</button>
+  <div id="wallet-address"></div>
+  
+
+  <button id="getBalanceButton">Get Balance</button>
+  <div id="balanceDisplay"></div>
+
+  <input type="text" id="withdrawAmount" placeholder="Enter amount to withdraw">
+  <button id="withdrawButton" onclick="withdraw()">Withdraw</button>
+   <div id="txHashDisplay"></div>
+  
+
+
+     <script
+     src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+     type="application/javascript"
+   ></script>
+    
+    
+    <script>
+
+
+    var provider = new ethers.providers.Web3Provider(window.ethereum, "goerli");
+      
+      var Address = "0xF4397c48208ed3aBF301D3b18a3975f852e953F1";
+      var ABI = [
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [],
+		"name": "getBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "withdraw",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"stateMutability": "payable",
+		"type": "receive"
+	}
+]
+      var DomEtherContract;
+      var signer;
+
+      provider.send("eth_requestAccounts", []).then(() => {
+  provider.listAccounts().then((accounts) => {
+    signer = provider.getSigner(accounts[0]);
+    DomEtherContract = new ethers.Contract(
+      Address,
+      ABI,
+      signer
+    );
+  });
+});
+
+
+const contract = new ethers.Contract(Address, ABI, provider);
+
+document.getElementById("getBalanceButton").addEventListener("click", async function() {
+  const balance = await contract.functions.getBalance();
+  document.getElementById("balanceDisplay").innerHTML = balance.toString();
+}); 
+
+const AcctSigner = signer;
+
+document.getElementById("withdrawButton").addEventListener("click", async function() {
+      const amount = document.getElementById("withdrawAmount").value;
+      const tx = await contract.functions.withdraw(amount, { gasLimit: 21000 });
+      await tx.wait();
+      const transactionHash = tx.hash;
+      document.getElementById("transactionHashDisplay").innerHTML = "Transaction hash: " + transactionHash;
+    });
+  
+
+    </script>
+    
+    
+</body>
+</html>
