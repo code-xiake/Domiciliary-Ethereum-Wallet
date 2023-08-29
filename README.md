@@ -1,4 +1,7 @@
 # Domiciliary-Ethereum-Wallet
+
+- [The project](#the-project)
+  ## The project
  the domiciliary wallet(DomEtherWallet), is a contract wallet that recieves ethers,checks the balance and withdraws ethers to the owner account.
  Technologies used for this project includes:
  HTML,CSS and javascript for the frontend
