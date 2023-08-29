@@ -6,7 +6,7 @@
  Remix online, VScode, for development environment(IDE)
  metamask and ether.js for connecting front end to back end
  
- VISION
+## VISION
  
  later versions of this projects would create software wallets that can be downloaded on any removeable storage device,this would allow the wallet to become a hard wallet,
  the softwares enculcate geo location codes, this would allow the wallet in addition to the private key be only accessible at a specific geographical location, for example,
